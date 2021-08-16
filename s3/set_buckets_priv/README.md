@@ -4,7 +4,7 @@
 pip3 install -r requirements.txt
 
 ## Usage
-python3 set_buckets_priv
+python3 set_buckets_priv.py
 
 ## Output
 .xlsx file with the changed buckets
