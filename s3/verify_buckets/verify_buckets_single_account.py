@@ -18,13 +18,13 @@ rows = []
 aws_account = "default"
     
 # Configure session:
-# session = boto3.session.Session(profile_name=aws_account)
-default_session = get_session(disable_env_vars=True)
-response = default_session.client('sts').get_caller_identity()
+session = boto3.session.Session(profile_name=aws_account)
+# default_session = get_session(disable_env_vars=True)
+# response = default_session.client('sts').get_caller_identity()
 
 # Get list of buckets and creation date
-# this = session.resource('s3')
-this = response.resource('s3')
+this = session.resource('s3')
+# this = response.resource('s3')
 
 bucket_list = this.buckets.all()
 for bucket in bucket_list:

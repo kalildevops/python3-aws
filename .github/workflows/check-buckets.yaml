@@ -35,6 +35,11 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/github-actions-oidc-role
           aws-region: ${{ env.aws_region }}
 
+      - name: Copy AWS config
+        working-directory: "${{ env.working_dir }}"
+        run: |
+          echo "${{ secrets.AWS_CONFIG_FILE }}" > ~/.aws/config
+
       - name: Install boto3
         working-directory: "${{ env.working_dir }}"
         run: |
