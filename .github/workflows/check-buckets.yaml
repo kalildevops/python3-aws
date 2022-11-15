@@ -58,5 +58,5 @@ jobs:
         working-directory: "${{ env.working_dir }}"
         with:
           name: file
-          path: *.xlsx
+          path: "*.xlsx"
         
