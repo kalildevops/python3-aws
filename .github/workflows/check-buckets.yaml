@@ -1,0 +1,44 @@
+name: Check S3 Buckets vulnerabilities and details
+
+on:
+  workflow_dispatch:
+    secrets:
+      aws_account:
+        required: true
+
+env:
+  working_dir: 's3/verify_buckets'
+  env: 'dev'
+  aws_region: 'us-east-1'
+
+permissions:
+      id-token: write
+      contents: read
+
+jobs:
+  check-buckets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Python 3.9 
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/github-actions-oidc-role
+          aws-region: ${{ env.aws_region }}
+
+      - name: Install Python requirements
+        working-directory: "${{ env.working_dir }}"
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Python script
+        working-directory: "${{ env.working_dir }}"
+        run: |
+          python3 verify_buckets_single_account.py
