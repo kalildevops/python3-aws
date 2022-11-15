@@ -38,7 +38,7 @@ jobs:
       - name: Copy AWS config
         working-directory: "${{ env.working_dir }}"
         run: |
-          echo "${{ secrets.AWS_CONFIG_FILE }}" > ~/.aws/config
+          mkdir ~/.aws && echo "${{ secrets.AWS_CONFIG_FILE }}" > ~/.aws/config
 
       - name: Install boto3
         working-directory: "${{ env.working_dir }}"
