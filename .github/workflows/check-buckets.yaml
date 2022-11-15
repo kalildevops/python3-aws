@@ -33,6 +33,11 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/github-actions-oidc-role
           aws-region: ${{ env.aws_region }}
 
+      - name: Install boto3
+        working-directory: "${{ env.working_dir }}"
+        run: |
+          pip install --extra-index-url https://pypi.python.org/simple boto3
+
       - name: Install Python requirements
         working-directory: "${{ env.working_dir }}"
         run: |
