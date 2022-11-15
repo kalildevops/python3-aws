@@ -10,6 +10,8 @@ env:
   working_dir: 's3/verify_buckets'
   env: 'dev'
   aws_region: 'us-east-1'
+  AWS_ROLE_ARN: arn:aws:iam::${{ secrets.AWS_ACCOUNT }}:role/github-actions-oidc-role
+  AWS_WEB_IDENTITY_TOKEN_SERVER: GitHub
 
 permissions:
       id-token: write
@@ -26,6 +28,11 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
+
+      - name: Copy AWS config
+        working-directory: "${{ env.working_dir }}"
+        run: |
+          mkdir ~/.aws && echo "${{ secrets.AWS_CONFIG_FILE }}" > ~/.aws/config
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
