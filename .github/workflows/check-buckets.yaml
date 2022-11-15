@@ -42,3 +42,15 @@ jobs:
         working-directory: "${{ env.working_dir }}"
         run: |
           python3 verify_buckets_single_account.py
+
+      - name: TEST
+        working-directory: "${{ env.working_dir }}"
+        run: |
+          ls -larth
+
+      - name: Upload report
+        uses: actions/upload-artifact@v1
+        with:
+          name: file
+          path: *.xlsx
+        working-directory: "${{ env.working_dir }}"
