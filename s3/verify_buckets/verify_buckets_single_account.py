@@ -18,10 +18,12 @@ rows = []
 aws_account = "default"
     
 # Configure session:
-session = boto3.session.Session(profile_name=aws_account)
+# session = boto3.session.Session(profile_name=aws_account)
+client = boto3.client('sso-oidc')
 
 # Get list of buckets and creation date
-this = session.resource('s3')
+# this = session.resource('s3')
+this = client.resource('s3')
 
 bucket_list = this.buckets.all()
 for bucket in bucket_list:
@@ -29,7 +31,8 @@ for bucket in bucket_list:
     creation_date = str(bucket.creation_date)
     print(str(bucket_name) + " " + str(creation_date))
 
-    s3 = session.client('s3')
+    # s3 = session.client('s3')
+    s3 = client.client('s3')
 
     # Verify if bucket is empty
     try:
